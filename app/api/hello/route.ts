@@ -48,6 +48,16 @@ export async function GET(request: NextRequest) {
   };
 
   json.greeting = await new Promise((resolve, reject) => {
+    exec(`python myscript.py`, (error, stdout, stderr) => {
+      if (error) {
+        json.greeting = "myscript failed";
+        reject(error);
+      } else {
+        json.greeting = "myscript executed successfully";
+        resolve(stdout);
+      }
+    });
+    json.greeting = "outside ms1";
     exec(`python myscript-2.py`, (error, stdout, stderr) => {
       if (error) {
         json.greeting = "myscript-2 failed";
@@ -57,6 +67,7 @@ export async function GET(request: NextRequest) {
         resolve(stdout);
       }
     });
+    json.greeting = "outside ms2";
   });
 
   return NextResponse.json(json);
