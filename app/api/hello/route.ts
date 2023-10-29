@@ -47,8 +47,8 @@ export async function GET(request: NextRequest) {
     greeting,
   };
 
-  json.greeting = await new Promise((resolve, reject) => {
-    exec(`python myscript.py`, (error, stdout, stderr) => {
+  await new Promise((resolve, reject) => {
+    exec(`python myscript.py a a a a`, (error, stdout, stderr) => {
       if (error) {
         json.greeting = "myscript failed";
         reject(error);
