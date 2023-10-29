@@ -1,8 +1,13 @@
-print("Hello from the Python sss!")
 from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont
 import requests
+import sys
 
+subheading_text1 = sys.argv[1]
+subheading_text2 = sys.argv[2]
+subheading_text3 = sys.argv[3]
+fileName = sys.argv[4]
+fileName = './public/' + fileName
 # Define font paths
 font_bold = "OpenSans-Bold.ttf"
 font_light = "OpenSans-Light.ttf"
@@ -41,9 +46,9 @@ font_subheading1 = ImageFont.truetype(font_bold, 35)
 font_subheading = ImageFont.truetype(font_light, 35)
 
 heading_text = "Pending"
-subheading_text1 = "4226 Comet Cir, Union City, CA 94587"
-subheading_text2 = "$638,888 | 3 Beds | 2 Baths"
-subheading_text3 = "1,255 sq. ft. (Built-Up) | 1,975 sq. ft. (Lot Size)"
+# subheading_text1 = "4226 Comet Cir, Union City, CA 94587"
+# subheading_text2 = "$638,888 | 3 Beds | 2 Baths"
+# subheading_text3 = "1,255 sq. ft. (Built-Up) | 1,975 sq. ft. (Lot Size)"
 
 heading_size = draw.textsize(heading_text, font_heading)
 subheading_size1 = draw.textsize(subheading_text1, font_subheading1)
@@ -73,4 +78,6 @@ img.paste(pin_img, (int(heading_center_x) - 39 , heading_y + 32))
 img.paste(img2, (0, img_height - img2_new_height))
 
 # Save image
-img.save("output.png")
+img.save(fileName)
+
+print('Done image processing!')

@@ -1,15 +1,30 @@
+"use client";
 import Image from "next/image";
 import runPythonScript from "./api/hello/runPyScript";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import ImgDiv from "./form";
+import Form from "./form";
 
-export default async function Home() {
-  const staticData = await fetch(`http://localhost:3000/api/hello`, {
-    cache: "force-cache",
-  });
+export default function Home() {
+  const [showImg, setShowImg] = useState(false);
+  const [fileName, setFileName] = useState("output");
 
-  const staticDataJSON = await staticData.json();
-  console.log("JSON.stringify(staticData, null, 2)");
-  console.log(JSON.stringify(staticDataJSON, null, 2));
+  // useEffect(() => {
+  //   const staticData = fetch(`http://localhost:3000/api/hello`, {
+  //     cache: "no-cache",
+  //   });
+
+  //   staticData
+  //     .then((res) => {
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       console.log(data);
+  //       console.log("data");
+  //       setShowImg(true);
+  //     });
+  // }, []);
+
   const mockReq = {} as any; // Replace with actual data if necessary
   const mockRes = {
     status: (statusCode: number) => ({
@@ -18,9 +33,7 @@ export default async function Home() {
       },
     }),
   } as any;
-  await runPythonScript(mockReq, mockRes);
-
-  console.log('completed"');
+  // runPythonScript(mockReq, mockRes);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -29,7 +42,23 @@ export default async function Home() {
           Auto Design Generator
           <code className="font-mono font-bold">app/page.tsx</code>
         </p>
-        <img src="public/output.png" />
+        {/* <ImgDiv /> */}
+        <Form
+          setShowImg={setShowImg}
+          fileName={fileName}
+          setFileName={setFileName}
+        />
+        {showImg && (
+          <Image
+            src={`/${fileName}`}
+            alt="Next.js Logo"
+            width={700}
+            height={500}
+            priority
+            key={Date.now()}
+          />
+        )}
+
         <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
           <a
             className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
