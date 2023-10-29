@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
   }
   json.greeting = await new Promise((resolve, reject) => {
     exec(
-      `python3 myscript.py ${address} ${priceBedBath} ${builtUpLotSize} ${fileName}`,
+      `python myscript.py ${address} ${priceBedBath} ${builtUpLotSize} ${fileName}`,
       (error, stdout, stderr) => {
         if (error) {
           console.error(`exec error: ${error}`);
