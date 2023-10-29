@@ -58,15 +58,18 @@ export async function GET(request: NextRequest) {
       }
     });
     json.greeting = "outside ms1";
-    exec(`python myscript-2.py`, (error, stdout, stderr) => {
-      if (error) {
-        json.greeting = "myscript-2 failed";
-        reject(error);
-      } else {
-        json.greeting = "myscript-2 executed successfully";
-        resolve(stdout);
+    exec(
+      `python myscript-2.py ${new Date().toUTCString()}`,
+      (error, stdout, stderr) => {
+        if (error) {
+          json.greeting = "myscript-2 failed";
+          reject(error);
+        } else {
+          json.greeting = "myscript-2 executed successfully";
+          resolve(stdout);
+        }
       }
-    });
+    );
     json.greeting = "outside ms2";
   });
 
