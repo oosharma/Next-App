@@ -8,7 +8,7 @@ export default function Home() {
   useEffect(() => {
     async function fetchText() {
       try {
-        const response = await fetch("http://localhost:3000/api/foo"); // Replace this with your API endpoint URL
+        const response = await fetch("/api/foo"); // Replace this with your API endpoint URL
         const respText = await response.text();
         console.log(respText);
       } catch (error) {
