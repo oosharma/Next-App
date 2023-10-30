@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface FormProps {
   setShowImg: React.Dispatch<React.SetStateAction<boolean>>;
@@ -9,28 +9,68 @@ interface FormProps {
 export default function Form({ setShowImg, setFileName, fileName }: FormProps) {
   const [formData, setFormData] = useState({
     address: "",
-    priceBedBath: "",
-    builtUpLotSize: "",
+    price: "",
+    bed: "",
+    bath: "",
+    builtUp: "",
+    lotSize: "",
   });
 
+  // const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  //   setShowImg(false);
+  //   event.preventDefault();
+  //   // Handle form submission here
+  //   console.log("here");
+  //   const queryParams = new URLSearchParams(formData).toString();
+
+  //   const updatedFileName = `output${Date.now()}.png`;
+  //   setFileName(updatedFileName);
+  //   const res = await fetch(
+  //     `/api/hello?${queryParams}&fileName=${updatedFileName}`,
+  //     {
+  //       cache: "no-cache",
+  //     }
+  //   ).then((res) => setShowImg(true));
+  // };  const [imageSrc, setImageSrc] = useState<null | string>(null);
+  const [imageSrc, setImageSrc] = useState<null | string>(null);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    setShowImg(false);
     event.preventDefault();
-    // Handle form submission here
-    console.log("here");
-    const queryParams = new URLSearchParams(formData).toString();
-
-    const updatedFileName = `output${Date.now()}.png`;
-    setFileName(updatedFileName);
-    const res = await fetch(
-      `/api/hello?${queryParams}&fileName=${updatedFileName}`,
-      {
-        cache: "no-cache",
-      }
-    ).then((res) => setShowImg(true));
+    try {
+      const queryParams = new URLSearchParams(formData).toString();
+      const response = await fetch(`/api/hello?${queryParams}`); // Replace this with your API endpoint URL
+      const blob = await response.blob();
+      const objectURL = URL.createObjectURL(blob);
+      setImageSrc(objectURL);
+    } catch (error) {
+      console.error("Failed to fetch image:", error);
+    }
+    // fetchImage();
   };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    // async function fetchImage() {
+    //   try {
+    //     const response = await fetch("http://localhost:3000/api/hello"); // Replace this with your API endpoint URL
+    //     const blob = await response.blob();
+    //     const objectURL = URL.createObjectURL(blob);
+    //     setImageSrc(objectURL);
+    //   } catch (error) {
+    //     console.error("Failed to fetch image:", error);
+    //   }
+    // }
+    // fetchImage();
+  }, []);
+  async function fetchImage() {
+    try {
+      const response = await fetch("http://localhost:3000/api/hello"); // Replace this with your API endpoint URL
+      const blob = await response.blob();
+      const objectURL = URL.createObjectURL(blob);
+      setImageSrc(objectURL);
+    } catch (error) {
+      console.error("Failed to fetch image:", error);
+    }
+  }
+  const handleChange = (event: any) => {
     const { name, value } = event.target;
     setFormData((prevState) => ({
       ...prevState,
@@ -59,21 +99,52 @@ export default function Form({ setShowImg, setFileName, fileName }: FormProps) {
           onChange={handleChange}
         />
 
-        <label htmlFor="priceBedBath">PriceBedBath:</label>
+        <label htmlFor="price">Price:</label>
         <input
-          id="priceBedBath"
-          name="priceBedBath"
+          id="price"
+          name="price"
           type="text"
-          value={formData.priceBedBath}
+          value={formData.price}
           onChange={handleChange}
         />
-
-        <label htmlFor="builtUpLotSize">BuiltUpLotSize:</label>
+        <label htmlFor="bed">Bed:</label>
+        <select
+          id="bed"
+          name="bed"
+          value={formData.bed}
+          onChange={handleChange}
+        >
+          <option value="">-</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+        <label htmlFor="bath">Bath:</label>
+        <select
+          id="bath"
+          name="bath"
+          value={formData.bath}
+          onChange={handleChange}
+        >
+          <option value="">-</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+        <label htmlFor="builtUp">Built Up:</label>
         <input
-          id="builtUpLotSize"
-          name="builtUpLotSize"
-          type="builtUpLotSize"
-          value={formData.builtUpLotSize}
+          id="builtUp"
+          name="builtUp"
+          type="builtUp"
+          value={formData.builtUp}
+          onChange={handleChange}
+        />
+        <label htmlFor="lotSize">Lot Size:</label>
+        <input
+          id="lotSize"
+          name="lotSize"
+          type="lotSize"
+          value={formData.lotSize}
           onChange={handleChange}
         />
 
@@ -85,6 +156,9 @@ export default function Form({ setShowImg, setFileName, fileName }: FormProps) {
       </button> */}
       </form>
       <br />
+      <div>
+        {imageSrc ? <img src={imageSrc} alt="Generated content" /> : <p> </p>}
+      </div>
     </>
   );
 }

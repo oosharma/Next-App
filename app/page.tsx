@@ -8,7 +8,22 @@ import Form from "./form";
 export default function Home() {
   const [showImg, setShowImg] = useState(false);
   const [fileName, setFileName] = useState("output");
+  const [imageSrc, setImageSrc] = useState<null | string>(null);
 
+  // useEffect(() => {
+  //   async function fetchImage() {
+  //     try {
+  //       const response = await fetch("http://localhost:3000/api/hello"); // Replace this with your API endpoint URL
+  //       const blob = await response.blob();
+  //       const objectURL = URL.createObjectURL(blob);
+  //       setImageSrc(objectURL);
+  //     } catch (error) {
+  //       console.error("Failed to fetch image:", error);
+  //     }
+  //   }
+
+  //   fetchImage();
+  // }, []);
   // useEffect(() => {
   //   const staticData = fetch(`http://localhost:3000/api/hello`, {
   //     cache: "no-cache",
@@ -42,6 +57,13 @@ export default function Home() {
           Auto Design Generator
           <code className="font-mono font-bold">app/page.tsx</code>
         </p>
+        <div>
+          {imageSrc ? (
+            <img src={imageSrc} alt="Generated content" />
+          ) : (
+            <p>Loading...</p>
+          )}
+        </div>
         {/* <ImgDiv /> */}
         <Form
           setShowImg={setShowImg}
