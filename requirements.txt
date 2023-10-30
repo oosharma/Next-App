@@ -1,2 +1,2 @@
-PIL==9.5.0
+pillow==9.5.0
 requests==2.26.0
