@@ -1,2 +1,2 @@
-pillow==9.5.0
+Pillow==9.5.0
 requests==2.26.0
