@@ -2,53 +2,22 @@
 import Image from "next/image";
 import runPythonScript from "./api/hello/runPyScript";
 import { useEffect, useState } from "react";
-import ImgDiv from "./form";
 import Form from "./form";
 
 export default function Home() {
-  const [showImg, setShowImg] = useState(false);
-  const [fileName, setFileName] = useState("output");
-  const [imageSrc, setImageSrc] = useState<null | string>(null);
+  useEffect(() => {
+    async function fetchText() {
+      try {
+        const response = await fetch("http://localhost:3000/api/foo"); // Replace this with your API endpoint URL
+        const respText = await response.text();
+        console.log(respText);
+      } catch (error) {
+        console.error("Failed to get resp from foo:", error);
+      }
+    }
 
-  // useEffect(() => {
-  //   async function fetchImage() {
-  //     try {
-  //       const response = await fetch("http://localhost:3000/api/hello"); // Replace this with your API endpoint URL
-  //       const blob = await response.blob();
-  //       const objectURL = URL.createObjectURL(blob);
-  //       setImageSrc(objectURL);
-  //     } catch (error) {
-  //       console.error("Failed to fetch image:", error);
-  //     }
-  //   }
-
-  //   fetchImage();
-  // }, []);
-  // useEffect(() => {
-  //   const staticData = fetch(`http://localhost:3000/api/hello`, {
-  //     cache: "no-cache",
-  //   });
-
-  //   staticData
-  //     .then((res) => {
-  //       return res.json();
-  //     })
-  //     .then((data) => {
-  //       console.log(data);
-  //       console.log("data");
-  //       setShowImg(true);
-  //     });
-  // }, []);
-
-  const mockReq = {} as any; // Replace with actual data if necessary
-  const mockRes = {
-    status: (statusCode: number) => ({
-      json: (data: any) => {
-        console.log(data); // Handle the response data
-      },
-    }),
-  } as any;
-  // runPythonScript(mockReq, mockRes);
+    fetchText();
+  }, []);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -57,29 +26,12 @@ export default function Home() {
           Auto Design Generator
           <code className="font-mono font-bold">app/page.tsx</code>
         </p>
-        <div>
-          {imageSrc ? (
-            <img src={imageSrc} alt="Generated content" />
-          ) : (
-            <p>Loading...</p>
-          )}
-        </div>
-        {/* <ImgDiv /> */}
-        <Form
+
+        {/* <Form
           setShowImg={setShowImg}
           fileName={fileName}
           setFileName={setFileName}
-        />
-        {showImg && (
-          <Image
-            src={`/${fileName}`}
-            alt="Next.js Logo"
-            width={700}
-            height={500}
-            priority
-            key={Date.now()}
-          />
-        )}
+        /> */}
 
         <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
           <a
