@@ -1,5 +1,5 @@
 from io import BytesIO
-from PIL import Image, ImageDraw, ImageFont
+# from PIL import Image, ImageDraw, ImageFont
 import requests
 import sys
 import base64
