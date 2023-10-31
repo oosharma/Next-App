@@ -1,6 +1,11 @@
-import pyttsx3
+import numpy as np
 
-# Create a text-to-speech engine
-engine = pyttsx3.init()
+# Create a 1D array
+a = np.array([1, 2, 3])
 
-print("pyttsx3 successfully initialized")
+# Create a 2D array
+b = np.array([[1, 2], [3, 4]])
+
+# Print the arrays
+print(a)
+print(b)
