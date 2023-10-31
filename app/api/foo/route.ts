@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 //writing test GET request to see if running python works
 export async function GET(request: NextRequest) {
   const stdout = await new Promise<string>((resolve, reject) => {
-    exec(`python test.py "1" "2"`, (error, stdout, stderr) => {
+    exec(`python scripts/test.py "1" "2"`, (error, stdout, stderr) => {
       if (error) {
         console.error(`exec error: ${error}`);
         reject(error);

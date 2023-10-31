@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
 
   const image = await new Promise<string>((resolve, reject) => {
     exec(
-      `python image-gen.py "${address}" "${price} | ${bed} Beds | ${bath} Baths" "${builtUp} sq.ft. (Built-Up) | ${lotSize} sq.ft. (Lot Size)"`,
+      `python scripts/image-gen.py "${address}" "${price} | ${bed} Beds | ${bath} Baths" "${builtUp} sq.ft. (Built-Up) | ${lotSize} sq.ft. (Lot Size)"`,
       { maxBuffer: 1024 * 1024 * 100 }, // Set max buffer size to 10 MB
       (error, stdout, stderr) => {
         if (error) {
