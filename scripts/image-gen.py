@@ -1,3 +1,4 @@
+# responds with base64 encoded image and saves image to output_image.png
 from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont
 import requests
